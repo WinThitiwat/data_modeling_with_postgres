@@ -2,42 +2,59 @@ import os
 import glob
 import psycopg2
 import pandas as pd
+import config
 from sql_queries import *
 
 
 def process_song_file(cur, filepath):
-    # open song file
-    df = 
-
-    # insert song record
-    song_data = 
-    cur.execute(song_table_insert, song_data)
+    """
+    Process songs files and load records into database.
     
-    # insert artist record
-    artist_data = 
-    cur.execute(artist_table_insert, artist_data)
+    Parameters:
+    ----------
+    cur: psycopg2.extensions.cursor
+        Database cursor reference
+    filepath: str
+        complete full path of a file to be loaded
+
+    Returns:
+    ----------
+    None
+    """
+    # open song file
+    df = pd.DataFrame(pd.read_json(filepath, lines=True))
+    
+    for _, row in df.iterrows():   
+
+        # insert song record
+        song_data = (row.song_id, row.title, row.artist_id, row.year, row.duration)
+        cur.execute(song_table_insert, song_data)
+    
+        # insert artist record
+        artist_data = (row.artist_id, row.artist_name, row.artist_location, row.artist_latitude, row.artist_longtitude)
+        cur.execute(artist_table_insert, artist_data)
 
 
 def process_log_file(cur, filepath):
     # open log file
-    df = 
+    df = ""
 
     # filter by NextSong action
-    df = 
+    df = ""
 
     # convert timestamp column to datetime
-    t = 
+    t = ""
     
     # insert time data records
-    time_data = 
-    column_labels = 
-    time_df = 
+    time_data = ""
+    column_labels = ""
+    time_df = ""
 
     for i, row in time_df.iterrows():
         cur.execute(time_table_insert, list(row))
 
     # load user table
-    user_df = 
+    user_df = ""
 
     # insert user records
     for i, row in user_df.iterrows():
@@ -51,7 +68,7 @@ def process_log_file(cur, filepath):
         songid, artistid = results if results else None, None
 
         # insert songplay record
-        songplay_data = 
+        songplay_data = ""
         cur.execute(songplay_table_insert, songplay_data)
 
 
@@ -68,18 +85,18 @@ def process_data(cur, conn, filepath, func):
     print('{} files found in {}'.format(num_files, filepath))
 
     # iterate over files and process
-    for i, datafile in enumerate(all_files, 1):
+    for i, datafile in enumerate(all_files[:2], 1):
         func(cur, datafile)
         conn.commit()
         print('{}/{} files processed.'.format(i, num_files))
 
 
 def main():
-    conn = psycopg2.connect("host=127.0.0.1 dbname=sparkifydb user=student password=student")
+    conn = psycopg2.connect(f"host=127.0.0.1 dbname=sparkifydb user={config.DB_USERNAME} password={config.DB_PASSWORD}")
     cur = conn.cursor()
 
-    process_data(cur, conn, filepath='data/song_data', func=process_song_file)
-    process_data(cur, conn, filepath='data/log_data', func=process_log_file)
+    # process_data(cur, conn, filepath='data/song_data', func=process_song_file)
+    # process_data(cur, conn, filepath='data/log_data', func=process_log_file)
 
     conn.close()
 
