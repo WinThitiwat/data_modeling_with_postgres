@@ -49,7 +49,7 @@ artist_table_create = ("""
         name VARCHAR,
         location VARCHAR,
         latitude NUMERIC,
-        longtitude NUMERIC
+        longitude NUMERIC
     );
 """)
 
@@ -91,10 +91,13 @@ song_table_insert = ("""
 
 artist_table_insert = ("""
     INSERT INTO artists
-    (artist_id, name, location, latitude, longtitude)
+    (artist_id, name, location, latitude, longitude)
     VALUES (%s, %s, %s, %s, %s)
     ON CONFLICT (artist_id)
-    DO NOTHING;
+    DO UPDATE SET
+        location=EXCLUDED.location,
+        latitude=EXCLUDED.latitude,
+        longitude=EXCLUDED.longitude
 """)
 
 
@@ -109,9 +112,12 @@ time_table_insert = ("""
 # FIND SONGS
 
 song_select = ("""
-    SELECT songs.title, artists.name
+    SELECT songs.song_id, artists.artist_id
     FROM songs
-    INNER JOIN artists USING (artist_id);
+    INNER JOIN artists USING (artist_id)
+    WHERE title=%s
+    AND name=%s
+    AND duration=%s;
 """)
 
 # QUERY LISTS
