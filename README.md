@@ -94,3 +94,7 @@ $ python3 create_tables.py
 ```
 $ python3 etl.py
 ```
+
+## **Project Author**
+- Author: Thitiwat Watanajaturaporn
+- Note: this project is part of Udacity's Data Engineering Nanodegree Program.
