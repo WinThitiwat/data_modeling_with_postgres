@@ -7,7 +7,7 @@ So, this project aims to:
 - To create a database schema defining fact and dimension tables for a star schema for a particular analytic focus.
 - To create an ETL pipeline that transfers data from files in two local directories into these tables in Postgres using Python and SQL.
 
-## **Dataset**
+## **Datasets**
 
 ## **Song Data**
 Song dataset is a subset of real data from the [Million Song Dataset](http://millionsongdataset.com/). The data is in JSON format and contains metadata about a song and the artist of that song.
