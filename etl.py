@@ -58,7 +58,7 @@ def process_log_file(cur, filepath):
 
     # insert time data records
     column_labels = ["start_time", "hour", "day", "week", "month", "year", "weekday"]
-    time_data = [t.dt.date, t.dt.hour, t.dt.day, t.dt.week, t.dt.month, t.dt.year, t.dt.day_name()]
+    time_data = (t, t.dt.hour, t.dt.day, t.dt.week, t.dt.month, t.dt.year, t.dt.day_name())
 
     time_df = pd.DataFrame(dict(zip(column_labels, time_data)))
 
@@ -77,16 +77,17 @@ def process_log_file(cur, filepath):
         
         # get songid and artistid from song and artist tables
         cur.execute(song_select, (row.song, row.artist, row.length))
-        
         results = cur.fetchone()
+
         if results:
-            songid, artistid = results 
+            songid, artistid = results
         else:
             songid, artistid = None, None
 
+        start_time = pd.to_datetime(row.ts, unit='ms')
         # insert songplay record
-        songplay_data = (pd.to_datetime(row.ts, unit='ms'), row.userId, row.level, songid, artistid, row.sessionId, row.location, row.userAgent)
-        print(songplay_data)
+        songplay_data = (start_time, row.userId, row.level, songid, artistid, row.sessionId, row.location, row.userAgent)
+
         cur.execute(songplay_table_insert, songplay_data)
 
 
@@ -118,7 +119,7 @@ def process_data(cur, conn, filepath, func):
     print('{} files found in {}'.format(num_files, filepath))
 
     # iterate over files and process
-    for i, datafile in enumerate(all_files[:2], 1):
+    for i, datafile in enumerate(all_files, 1):
         func(cur, datafile)
         conn.commit()
         print('{}/{} files processed.'.format(i, num_files))

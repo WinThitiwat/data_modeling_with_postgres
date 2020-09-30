@@ -114,7 +114,8 @@ time_table_insert = ("""
 song_select = ("""
     SELECT songs.song_id, artists.artist_id
     FROM songs
-    INNER JOIN artists USING (artist_id)
+    INNER JOIN artists 
+    ON songs.artist_id=artists.artist_id
     WHERE title=%s
     AND name=%s
     AND duration=%s;
