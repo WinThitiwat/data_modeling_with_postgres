@@ -80,9 +80,9 @@ $ pip3 install -r requirement.txt
 ```
 5. In the project root directory, create a `.env` file. In the file, write:
 ```
-DB_NAME='{your default database's name}'
+DB_NAME='{your default database name}'
 DB_USERNAME='{your default database username}'
-DB_PASSWORD='your default database password'
+DB_PASSWORD='{your default database password}'
 ```
 
 ## **How to run**
