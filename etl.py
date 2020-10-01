@@ -23,7 +23,6 @@ def process_song_file(cur, filepath):
     df = pd.DataFrame([pd.read_json(filepath, typ='series',convert_dates=False)])
     
     for _, row in df.iterrows():   
-        # num_songs, artist_id, artist_latitude, artist_longitude,artist_location, artist_name, song_id, title, duration, year = data
         # insert artist record
         artist_data = (row.artist_id, row.artist_name, row.artist_location, row.artist_latitude, row.artist_longitude)
         cur.execute(artist_table_insert, artist_data)

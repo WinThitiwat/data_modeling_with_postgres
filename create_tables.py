@@ -7,7 +7,6 @@ def create_database():
     Establish database connection and return the connection object and cursor reference.
 
     Returns:
-        Parameters:
         cur: psycopg2.extensions.cursor
             Database cursor reference
         conn: psycopg2.extensions.connection
