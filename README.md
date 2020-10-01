@@ -65,7 +65,7 @@ In this project, the database schema is based on the star schema, which includes
 - `etl.ipynb` - a Python jupyter notebook for exploratory data analysis before an actual implementation
 - `test.ipynb` - a Python jupyter notebook for database connection testing and validation 
 - `etl.py` - a Python file implementing the actual ETL data pipeline process for all datasets
-- `config.py` - a Python file containing common configuration parameters used by the entire program
+- `config.py` - a Python file containing common environment variables used by the project
 - `requirement.txt` - a text file containing all mandatory dependencies for the project
 
 
