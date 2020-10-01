@@ -58,7 +58,17 @@ In this project, the database schema is based on the star schema, which includes
   ```
   start_time, hour, day, week, month, year, weekday
   ```
-  
+## **Project Files**
+- `data/` - a directory containing 2 local directories of JSON files
+- `sql_queries.py` - a Python file containing a set of data definition and data manipulation SQL commands for fact table and dimension tables
+- `create_tables.py` - a Python file establishing the <strong>sparkify</strong> database connection and creating fact table and dimension tables
+- `etl.ipynb` - a Python jupyter notebook for exploratory data analysis before an actual implementation
+- `test.ipynb` - a Python jupyter notebook for database connection testing and validation 
+- `etl.py` - a Python file implementing the actual ETL data pipeline process for all datasets
+- `config.py` - a Python file containing common configuration parameters used by the entire program
+- `requirement.txt` - a text file containing all mandatory dependencies for the project
+
+
 ## **Project Setup**
 1. After cloning and navigating to the root directory for the project, make sure your system has `Python3` and `pip3` installed already. Check in Terminal by
 ```
